@@ -1,149 +1,144 @@
-import React, { useState } from 'react';
-import { useCountUp } from '../hooks/useCountUp';
+import React from 'react';
+import { ExternalLink, Plus } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { RussellPortrait } from './RussellPortrait';
 
-interface SpecialistSkillAvatar {
+interface StoreOrbitItem {
   id: string;
-  label: string;
+  name: string;
   sublabel: string;
-  imgUrl: string;
+  url?: string;
+  isBlank: boolean;
   angle: number;
   radius: number;
   size: number;
-  borderRadius: string;
-  glowColor: string;
+  orbitIndex: number;
   flyInDelay: number;
+  fallbackInitials?: string;
+  faviconDomain?: string;
 }
 
 export const CirclesVisualization: React.FC = () => {
-  const [activeMetric, setActiveMetric] = useState<'products' | 'exp' | 'remote'>('products');
-  const count = useCountUp(3, 2000, 1200);
-
-  // Specialist tools and avatar orbits
-  const orbit1Items: SpecialistSkillAvatar[] = [
+  // 8 Total Planetary Orbit Slots: 3 Live Client Stores + 5 Blank Slots
+  const orbitItems: StoreOrbitItem[] = [
+    // 1st site: Willow Bath and Vanity
     {
-      id: 'avatar-russell-main',
-      label: 'Russell Taga-an',
-      sublabel: '4+ Yrs Store VA',
-      imgUrl: PERSONAL_INFO.avatarUrl,
+      id: 'store-willow-bath',
+      name: 'Willow Bath & Vanity',
+      sublabel: 'Shopify & Home Depot • Visit ↗',
+      url: 'https://willowbathandvanity.com/',
+      isBlank: false,
       angle: 270,
       radius: 177,
       size: 64,
-      borderRadius: '20px',
-      glowColor: 'rgba(201, 218, 176, 0.9)',
-      flyInDelay: 0.6,
+      orbitIndex: 1,
+      flyInDelay: 0.5,
+      fallbackInitials: 'WB',
+      faviconDomain: 'willowbathandvanity.com',
     },
-  ];
-
-  const orbit2Items: SpecialistSkillAvatar[] = [
+    // 2nd site: Sultan's Fine Fabrics
     {
-      id: 'item-shopify',
-      label: 'Shopify Expert',
-      sublabel: '3,000+ Products',
-      imgUrl: 'https://cdn.iconscout.com/icon/free/png-256/free-shopify-logo-icon-svg-download-png-3030263.png',
+      id: 'store-sultans-fabrics',
+      name: "Sultan's Fine Fabrics",
+      sublabel: 'Luxury Textiles • Visit ↗',
+      url: 'https://www.sultansfinefabrics.com/',
+      isBlank: false,
       angle: 60,
       radius: 251,
-      size: 56,
-      borderRadius: '50%',
-      glowColor: 'rgba(201, 218, 176, 0.8)',
-      flyInDelay: 0.8,
-    },
-    {
-      id: 'item-woo',
-      label: 'WooCommerce',
-      sublabel: 'Store Operations',
-      imgUrl: 'https://cdn.iconscout.com/icon/free/png-256/free-woocommerce-logo-icon-svg-download-png-3030282.png',
-      angle: 180,
-      radius: 251,
       size: 60,
-      borderRadius: '50%',
-      glowColor: 'rgba(58, 107, 74, 0.8)',
-      flyInDelay: 1.0,
+      orbitIndex: 2,
+      flyInDelay: 0.8,
+      fallbackInitials: 'SF',
+      faviconDomain: 'sultansfinefabrics.com',
     },
+    // 3rd site: Canton Roast
     {
-      id: 'item-homedepot',
-      label: 'Home Depot',
-      sublabel: 'Product Uploads',
-      imgUrl: 'https://polo-pecan-73837341.figma.site/_assets/v11/d5470a58b02388336141575048720f19a50de832.png',
-      angle: 300,
-      radius: 251,
-      size: 56,
-      borderRadius: '20px',
-      glowColor: 'rgba(212, 226, 176, 0.8)',
-      flyInDelay: 1.2,
-    },
-  ];
-
-  const orbit3Items: SpecialistSkillAvatar[] = [
-    {
-      id: 'item-photoshop',
-      label: 'Adobe Photoshop',
-      sublabel: 'Image Cleanup & Specs',
-      imgUrl: 'https://polo-pecan-73837341.figma.site/_assets/v11/018736aa5d0275c4ce56cfebaf2ae3007d81ca1e.png',
-      angle: 130,
+      id: 'store-canton-roast',
+      name: 'Canton Roast',
+      sublabel: 'Online Ordering • Visit ↗',
+      url: 'https://cantonroast.com/',
+      isBlank: false,
+      angle: 150,
       radius: 325,
-      size: 72,
-      borderRadius: '50%',
-      glowColor: 'rgba(201, 218, 176, 0.8)',
+      size: 64,
+      orbitIndex: 3,
+      flyInDelay: 1.1,
+      fallbackInitials: 'CR',
+      faviconDomain: 'cantonroast.com',
+    },
+    // 4th site: Blank slot
+    {
+      id: 'slot-blank-4',
+      name: 'Available Store Slot',
+      sublabel: 'Your Store Next',
+      isBlank: true,
+      angle: 230,
+      radius: 251,
+      size: 46,
+      orbitIndex: 2,
+      flyInDelay: 1.3,
+    },
+    // 5th site: Blank slot
+    {
+      id: 'slot-blank-5',
+      name: 'Available Store Slot',
+      sublabel: 'Your Store Next',
+      isBlank: true,
+      angle: 320,
+      radius: 325,
+      size: 48,
+      orbitIndex: 3,
       flyInDelay: 1.5,
     },
-  ];
-
-  const orbit4Items: SpecialistSkillAvatar[] = [
+    // 6th site: Blank slot
     {
-      id: 'item-premiere',
-      label: 'Premiere & DaVinci',
-      sublabel: 'Social Video Editing',
-      imgUrl: 'https://polo-pecan-73837341.figma.site/_assets/v11/c76d8a0b99676de31c014344bfaf75bad090758d.png',
-      angle: 30,
+      id: 'slot-blank-6',
+      name: 'Available Store Slot',
+      sublabel: 'Your Store Next',
+      isBlank: true,
+      angle: 35,
       radius: 399,
-      size: 56,
-      borderRadius: '50%',
-      glowColor: 'rgba(58, 107, 74, 0.8)',
-      flyInDelay: 1.8,
+      size: 46,
+      orbitIndex: 4,
+      flyInDelay: 1.7,
     },
+    // 7th site: Blank slot
     {
-      id: 'item-ai',
-      label: 'ChatGPT & AI',
-      sublabel: 'Descriptions & SEO',
-      imgUrl: 'https://polo-pecan-73837341.figma.site/_assets/v11/7b1b5f039de7b54cc9913e96c1923c3b15a157fa.png',
-      angle: 95,
+      id: 'slot-blank-7',
+      name: 'Available Store Slot',
+      sublabel: 'Your Store Next',
+      isBlank: true,
+      angle: 185,
       radius: 399,
-      size: 72,
-      borderRadius: '24px',
-      glowColor: 'rgba(201, 218, 176, 0.8)',
-      flyInDelay: 2.0,
+      size: 46,
+      orbitIndex: 4,
+      flyInDelay: 1.9,
     },
+    // 8th site: Blank slot
     {
-      id: 'item-sheets',
-      label: 'Google Sheets',
-      sublabel: 'Bulk Data & Inventory',
-      imgUrl: 'https://polo-pecan-73837341.figma.site/_assets/v11/9ae171d8895199349755c43fbff00e122221a027.png',
-      angle: 220,
+      id: 'slot-blank-8',
+      name: 'Available Store Slot',
+      sublabel: 'Your Store Next',
+      isBlank: true,
+      angle: 285,
       radius: 399,
-      size: 72,
-      borderRadius: '24px',
-      glowColor: 'rgba(212, 226, 176, 0.8)',
-      flyInDelay: 2.2,
-    },
-    {
-      id: 'item-willow',
-      label: 'Willow Bath & Vanity',
-      sublabel: 'Catalog Lead',
-      imgUrl: 'https://polo-pecan-73837341.figma.site/_assets/v11/926c9eb7b4bc1df846fa0e39f0b0dc3fefd80671.png',
-      angle: 320,
-      radius: 399,
-      size: 56,
-      borderRadius: '50%',
-      glowColor: 'rgba(58, 107, 74, 0.8)',
-      flyInDelay: 2.3,
+      size: 46,
+      orbitIndex: 4,
+      flyInDelay: 2.1,
     },
   ];
 
-  const renderOrbitItems = (items: SpecialistSkillAvatar[], spinDirection: 'cw' | 'ccw', durationSec: number) => {
-    const counterSpinClass = spinDirection === 'ccw' ? 'spin-cw-inline' : 'spin-ccw-inline';
+  const handlePlanetClick = (item: StoreOrbitItem) => {
+    if (!item.isBlank && item.url) {
+      window.open(item.url, '_blank', 'noopener,noreferrer');
+    }
+  };
 
-    return items.map((item) => {
+  const renderOrbitLayer = (orbitNumber: number, spinDir: 'cw' | 'ccw', durationSec: number) => {
+    const itemsInOrbit = orbitItems.filter((it) => it.orbitIndex === orbitNumber);
+    const counterSpinClass = spinDir === 'ccw' ? 'spin-cw-inline' : 'spin-ccw-inline';
+
+    return itemsInOrbit.map((item) => {
       const rad = (item.angle * Math.PI) / 180;
       const x = Math.round(item.radius * Math.cos(rad));
       const y = Math.round(item.radius * Math.sin(rad));
@@ -152,7 +147,7 @@ export const CirclesVisualization: React.FC = () => {
         <div
           key={item.id}
           id={item.id}
-          className="absolute top-1/2 left-1/2 pointer-events-auto group"
+          className="absolute top-1/2 left-1/2 pointer-events-auto group z-20"
           style={{
             transform: `translate(-50%, -50%) translate(${x}px, ${y}px)`,
           }}
@@ -168,28 +163,54 @@ export const CirclesVisualization: React.FC = () => {
                 animationDuration: `${durationSec}s`,
               }}
             >
-              <img
-                src={item.imgUrl}
-                alt={item.label}
-                className="object-cover transition-transform duration-300 group-hover:scale-115 select-none cursor-pointer bg-[#2F5D3A]"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  // Fallback if external CDN is blocked
-                  (e.target as HTMLElement).style.display = 'none';
-                }}
-                style={{
-                  width: `${item.size}px`,
-                  height: `${item.size}px`,
-                  borderRadius: item.borderRadius,
-                  boxShadow: `0 0 25px ${item.glowColor}`,
-                  border: '2px solid #C9DAB0',
-                }}
-              />
+              {item.isBlank ? (
+                // Blank planet placeholder slot
+                <div
+                  className="rounded-full bg-white/70 border-2 border-dashed border-[#C9DAB0] flex items-center justify-center transition-all duration-300 group-hover:border-[#2F5D3A] group-hover:scale-110 shadow-xs cursor-pointer group-hover:bg-[#C9DAB0]/30"
+                  style={{
+                    width: `${item.size}px`,
+                    height: `${item.size}px`,
+                  }}
+                >
+                  <Plus className="w-4 h-4 text-[#3A6B4A]/60 group-hover:text-[#2F5D3A]" />
+                </div>
+              ) : (
+                // Active Client Store Planet
+                <button
+                  type="button"
+                  onClick={() => handlePlanetClick(item)}
+                  className="relative rounded-full bg-white border-2 border-[#2F5D3A] flex items-center justify-center transition-all duration-300 group-hover:scale-115 shadow-[0_6px_20px_rgba(47,93,58,0.25)] group-hover:shadow-[0_8px_25px_rgba(47,93,58,0.4)] cursor-pointer overflow-hidden p-1.5"
+                  style={{
+                    width: `${item.size}px`,
+                    height: `${item.size}px`,
+                  }}
+                  title={`Open ${item.name}`}
+                >
+                  {/* Store Favicon with fallback */}
+                  <img
+                    src={`https://www.google.com/s2/favicons?domain=${item.faviconDomain}&sz=128`}
+                    alt={item.name}
+                    className="w-full h-full object-contain rounded-full select-none"
+                    onError={(e) => {
+                      (e.target as HTMLElement).style.display = 'none';
+                    }}
+                  />
+                  {/* Fallback Monogram Badge */}
+                  <span className="font-urbanist font-extrabold text-xs text-[#2F5D3A] select-none absolute inset-0 -z-10 flex items-center justify-center bg-[#F2F2EE]">
+                    {item.fallbackInitials}
+                  </span>
 
-              {/* Tooltip Badge on Hover */}
-              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none bg-[#2F5D3A] text-[#F2F2EE] border-2 border-[#C9DAB0] px-2.5 py-1 rounded-lg text-[11px] whitespace-nowrap z-30 shadow-xl">
-                <div className="font-bold text-[#C9DAB0]">{item.label}</div>
-                <div className="text-[9px] text-[#F2F2EE]/90">{item.sublabel}</div>
+                  {/* Tiny External Link Indicator */}
+                  <div className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-[#2F5D3A] text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </div>
+                </button>
+              )}
+
+              {/* Hover Tooltip Card */}
+              <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none bg-[#2F5D3A] text-[#F2F2EE] border-2 border-[#C9DAB0] px-3 py-1.5 rounded-xl text-center z-40 shadow-2xl whitespace-nowrap min-w-[120px]">
+                <div className="font-bold text-xs text-[#C9DAB0]">{item.name}</div>
+                <div className="text-[10px] text-[#F2F2EE]/90 font-medium">{item.sublabel}</div>
               </div>
             </div>
           </div>
@@ -215,7 +236,7 @@ export const CirclesVisualization: React.FC = () => {
         style={{ animation: 'spin-ccw 60s linear infinite' }}
       >
         <div className="orbit-circle-border" />
-        {renderOrbitItems(orbit4Items, 'ccw', 60)}
+        {renderOrbitLayer(4, 'ccw', 60)}
       </div>
 
       {/* Orbit 3 - 649px, spins CW 50s */}
@@ -225,7 +246,7 @@ export const CirclesVisualization: React.FC = () => {
         style={{ animation: 'spin-cw 50s linear infinite' }}
       >
         <div className="orbit-circle-border" />
-        {renderOrbitItems(orbit3Items, 'cw', 50)}
+        {renderOrbitLayer(3, 'cw', 50)}
       </div>
 
       {/* Orbit 2 - 501px, spins CW 40s */}
@@ -235,7 +256,7 @@ export const CirclesVisualization: React.FC = () => {
         style={{ animation: 'spin-cw 40s linear infinite' }}
       >
         <div className="orbit-circle-border" />
-        {renderOrbitItems(orbit2Items, 'cw', 40)}
+        {renderOrbitLayer(2, 'cw', 40)}
       </div>
 
       {/* Orbit 1 (Innermost) - 353px, spins CCW 30s */}
@@ -245,29 +266,31 @@ export const CirclesVisualization: React.FC = () => {
         style={{ animation: 'spin-ccw 30s linear infinite' }}
       >
         <div className="orbit-circle-border" />
-        {renderOrbitItems(orbit1Items, 'ccw', 30)}
+        {renderOrbitLayer(1, 'ccw', 30)}
       </div>
 
-      {/* Center Hub inside Orbit 1 */}
+      {/* Center Hub: Russell's Photo with Organic Blob Shape & White Background (matching 3rd pic) */}
       <div
-        id="center-circle-hub"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full flex flex-col items-center justify-center text-center z-10 pointer-events-none bg-gradient-to-b from-[#2F5D3A] to-[#1E3A24] border-3 border-[#C9DAB0] shadow-[0_12px_40px_rgba(47,93,58,0.45)]"
+        id="center-curve-hub"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] sm:w-[260px] sm:h-[260px] flex items-center justify-center z-10 select-none group"
       >
-        <span
-          id="center-specialists-count"
-          className="font-urbanist font-extrabold text-[64px] leading-none text-[#F2F2EE] tracking-tight drop-shadow-[0_4px_16px_rgba(201,218,176,0.5)]"
-        >
-          {count}k+
-        </span>
-        <span
-          id="center-specialists-label"
-          className="font-urbanist font-bold text-[15px] text-[#C9DAB0] tracking-wider mt-2 uppercase letter-spacing-[0.05em]"
-        >
-          Products Managed
-        </span>
-        <span className="text-[11px] font-medium text-[#D4E2B0] mt-1">
-          Shopify & Home Depot
-        </span>
+        {/* Layer 1: Ambient Sage Glow */}
+        <div
+          className="absolute inset-[-10px] organic-blob-shape-delayed bg-[#C9DAB0]/60 -z-20 blur-[4px] transition-transform duration-700 group-hover:scale-105"
+        />
+
+        {/* Layer 2: Main Russell Portrait Component with White Card & Organic Blob */}
+        <RussellPortrait
+          className="w-full h-full"
+          blobVariant="green"
+          showUploadControl={true}
+        />
+
+        {/* Floating Name Badge */}
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-[#2F5D3A] text-[#F2F2EE] border-2 border-[#C9DAB0] text-[11px] font-bold px-4 py-1 rounded-full shadow-lg whitespace-nowrap flex items-center gap-2 pointer-events-none z-30 transition-transform duration-300 group-hover:scale-105">
+          <span className="w-2 h-2 rounded-full bg-[#C9DAB0] animate-pulse" />
+          <span>Russell Taga-an</span>
+        </div>
       </div>
     </div>
   );

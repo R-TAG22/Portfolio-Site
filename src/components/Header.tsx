@@ -1,113 +1,107 @@
 import React, { useState } from 'react';
-import { Menu, X, Download, FileText, Briefcase, Mail } from 'lucide-react';
+import { Menu, X, Mail } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { RussellPortrait } from './RussellPortrait';
 
 interface HeaderProps {
-  onOpenContact: () => void;
-  onOpenResume: () => void;
-  onOpenWork: () => void;
+  activeTab: 'home' | 'about' | 'work';
+  onSelectTab: (tab: 'home' | 'about' | 'work') => void;
+  onOpenHire: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  onOpenContact,
-  onOpenResume,
-  onOpenWork,
+  activeTab,
+  onSelectTab,
+  onOpenHire,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header
       id="main-header"
-      className="w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-16 py-6 flex items-center justify-between animate-fade-down relative z-30 font-inter"
-      style={{
-        animationDuration: '0.8s',
-        animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
-      }}
+      className="w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-16 py-6 flex items-center justify-between relative z-30 font-inter"
     >
-      {/* Left side: Russell. branding + Nav links */}
-      <div id="header-left" className="flex items-center gap-8 lg:gap-12">
-        <a
-          id="brand-logo-link"
-          href="#"
-          className="flex items-center gap-2.5 group select-none"
+      {/* Left: Russell logo with profile pic + brand title */}
+      <div id="header-left" className="flex items-center">
+        <button
+          id="brand-logo-btn"
+          type="button"
+          onClick={() => onSelectTab('home')}
+          className="group select-none cursor-pointer bg-transparent border-0 p-0 text-left flex items-center gap-3"
         >
-          <div className="w-8 h-8 rounded-full border-2 border-[#C9DAB0] overflow-hidden bg-[#2F5D3A]/10 flex items-center justify-center group-hover:border-[#3A6B4A] transition-all">
-            <img
-              src={PERSONAL_INFO.avatarUrl}
-              alt={PERSONAL_INFO.name}
-              className="w-full h-full object-cover"
-              referrerPolicy="no-referrer"
+          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden flex-none shadow-xs group-hover:scale-105 transition-transform">
+            <RussellPortrait
+              className="w-full h-full"
+              blobVariant="green"
+              showUploadControl={false}
             />
           </div>
-          <div className="font-urbanist font-extrabold text-2xl tracking-tight text-[#2F5D3A]">
-            Russell<span className="text-[#3A6B4A] group-hover:text-[#C9DAB0] transition-colors">.</span>
-          </div>
-        </a>
-
-        {/* Desktop Nav links */}
-        <nav id="desktop-nav" className="hidden md:flex items-center gap-6 lg:gap-8">
-          <button
-            id="nav-link-services"
-            type="button"
-            onClick={onOpenWork}
-            className="nav-link text-[#2F5D3A] hover:text-[#3A6B4A] text-[15px] font-semibold tracking-tight bg-transparent border-0 p-0"
-          >
-            Services & Work
-          </button>
-          <button
-            id="nav-link-experience"
-            type="button"
-            onClick={onOpenResume}
-            className="nav-link text-[#2F5D3A] hover:text-[#3A6B4A] text-[15px] font-semibold tracking-tight bg-transparent border-0 p-0"
-          >
-            Experience
-          </button>
-          <a
-            id="nav-link-portfolio"
-            href={PERSONAL_INFO.portfolioSiteUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="nav-link text-[#2F5D3A] hover:text-[#3A6B4A] text-[15px] font-semibold tracking-tight"
-          >
-            Original Site ↗
-          </a>
-          <button
-            id="nav-link-contact"
-            type="button"
-            onClick={onOpenContact}
-            className="nav-link text-[#2F5D3A] hover:text-[#3A6B4A] text-[15px] font-semibold tracking-tight bg-transparent border-0 p-0"
-          >
-            Contact
-          </button>
-        </nav>
+          <span className="font-urbanist font-extrabold text-2xl sm:text-3xl tracking-tight text-[#2F5D3A] transition-colors">
+            Russell<span className="text-[#3A6B4A] group-hover:text-[#2F5D3A]">.</span>
+          </span>
+        </button>
       </div>
 
-      {/* Right side: Resume link + Hire Me button */}
-      <div id="header-right" className="flex items-center gap-4 sm:gap-6 lg:gap-8">
+      {/* Center: Desktop Navigation Menus (About, Work) */}
+      <nav
+        id="desktop-nav-center"
+        className="hidden md:flex items-center gap-1.5 p-1.5 rounded-full bg-white/80 backdrop-blur-md border-2 border-[#C9DAB0] shadow-sm"
+      >
         <button
-          id="login-link"
+          id="nav-link-home"
           type="button"
-          onClick={onOpenResume}
-          className="nav-link text-[#2F5D3A] text-[15px] font-semibold tracking-tight hover:text-[#3A6B4A] bg-transparent border-0 p-0 hidden sm:inline-block cursor-pointer"
+          onClick={() => onSelectTab('home')}
+          className={`px-5 py-2 rounded-full text-sm font-bold tracking-tight transition-all cursor-pointer ${
+            activeTab === 'home'
+              ? 'bg-[#2F5D3A] text-[#F2F2EE] shadow-sm'
+              : 'text-[#2F5D3A] hover:bg-[#C9DAB0]/40'
+          }`}
         >
-          View Resume
+          Home
         </button>
+        <button
+          id="nav-link-about"
+          type="button"
+          onClick={() => onSelectTab('about')}
+          className={`px-5 py-2 rounded-full text-sm font-bold tracking-tight transition-all cursor-pointer ${
+            activeTab === 'about'
+              ? 'bg-[#2F5D3A] text-[#F2F2EE] shadow-sm'
+              : 'text-[#2F5D3A] hover:bg-[#C9DAB0]/40'
+          }`}
+        >
+          About
+        </button>
+        <button
+          id="nav-link-work"
+          type="button"
+          onClick={() => onSelectTab('work')}
+          className={`px-5 py-2 rounded-full text-sm font-bold tracking-tight transition-all cursor-pointer ${
+            activeTab === 'work'
+              ? 'bg-[#2F5D3A] text-[#F2F2EE] shadow-sm'
+              : 'text-[#2F5D3A] hover:bg-[#C9DAB0]/40'
+          }`}
+        >
+          Work
+        </button>
+      </nav>
 
+      {/* Right Top Corner: Hire Me button */}
+      <div id="header-right" className="flex items-center gap-3 sm:gap-4">
         <div id="join-now-wrap" className="btn-border-wrap">
           <button
-            id="join-now-btn"
+            id="hire-me-top-btn"
             type="button"
-            onClick={onOpenContact}
+            onClick={onOpenHire}
             className="btn-join cursor-pointer"
           >
             <span className="relative z-10 flex items-center gap-2">
-              <Mail className="w-4 h-4 text-[#C9DAB0] group-hover:text-white" />
-              <span>Hire Me</span>
+              <Mail className="w-4 h-4 text-[#C9DAB0]" />
+              <span>Hire me</span>
             </span>
           </button>
         </div>
 
-        {/* Mobile menu toggle button */}
+        {/* Mobile menu toggle */}
         <button
           id="mobile-menu-toggle"
           type="button"
@@ -123,50 +117,55 @@ export const Header: React.FC<HeaderProps> = ({
       {mobileMenuOpen && (
         <div
           id="mobile-nav-drawer"
-          className="absolute top-full left-0 right-0 bg-[#2F5D3A] text-[#F2F2EE] border-b border-[#C9DAB0]/30 px-8 py-6 flex flex-col gap-4 md:hidden shadow-2xl z-50 rounded-b-2xl"
+          className="absolute top-full left-0 right-0 bg-[#2F5D3A] text-[#F2F2EE] border-b-2 border-[#C9DAB0] px-8 py-6 flex flex-col gap-3 md:hidden shadow-2xl z-50 rounded-b-2xl animate-fade-down"
         >
           <button
-            id="mobile-nav-services"
             type="button"
             onClick={() => {
               setMobileMenuOpen(false);
-              onOpenWork();
+              onSelectTab('home');
             }}
-            className="text-left text-[#F2F2EE] text-base font-semibold hover:text-[#C9DAB0] transition-colors py-2 border-b border-white/10"
+            className={`text-left text-base font-bold transition-colors py-2.5 border-b border-white/10 ${
+              activeTab === 'home' ? 'text-[#C9DAB0]' : 'text-[#F2F2EE]'
+            }`}
           >
-            Services & Work
+            Home
           </button>
           <button
-            id="mobile-nav-experience"
             type="button"
             onClick={() => {
               setMobileMenuOpen(false);
-              onOpenResume();
+              onSelectTab('about');
             }}
-            className="text-left text-[#F2F2EE] text-base font-semibold hover:text-[#C9DAB0] transition-colors py-2 border-b border-white/10"
+            className={`text-left text-base font-bold transition-colors py-2.5 border-b border-white/10 ${
+              activeTab === 'about' ? 'text-[#C9DAB0]' : 'text-[#F2F2EE]'
+            }`}
           >
-            Experience & Resume
+            About
           </button>
           <button
-            id="mobile-nav-contact"
             type="button"
             onClick={() => {
               setMobileMenuOpen(false);
-              onOpenContact();
+              onSelectTab('work');
             }}
-            className="text-left text-[#F2F2EE] text-base font-semibold hover:text-[#C9DAB0] transition-colors py-2 border-b border-white/10"
+            className={`text-left text-base font-bold transition-colors py-2.5 border-b border-white/10 ${
+              activeTab === 'work' ? 'text-[#C9DAB0]' : 'text-[#F2F2EE]'
+            }`}
           >
-            Contact & Hire Me
+            Work
           </button>
-          <a
-            id="mobile-nav-original-site"
-            href={PERSONAL_INFO.portfolioSiteUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-left text-[#C9DAB0] text-sm font-semibold hover:text-[#D4E2B0] transition-colors py-2"
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenHire();
+            }}
+            className="text-left text-base font-bold text-[#C9DAB0] transition-colors py-2.5 flex items-center justify-between"
           >
-            Open Original Site ↗
-          </a>
+            <span>Hire me</span>
+            <span>→</span>
+          </button>
         </div>
       )}
     </header>
