@@ -12,9 +12,10 @@ export const PERSONAL_INFO = {
   avatarUrl: 'https://avatars.githubusercontent.com/u/121448425?v=4',
   resumePdfUrl: 'https://r-tag22.github.io/my_personal_site/Russell-T-Resume.pdf',
   githubUrl: 'https://github.com/R-TAG22',
+  upworkUrl: 'https://www.upwork.com/freelancers/~017d47884cc6a6c3ac',
   portfolioSiteUrl: 'https://r-tag22.github.io/my_personal_site/index.html',
   intro:
-    "I'm Russell, an E-commerce Virtual Assistant with 4+ years of experience managing Shopify and WooCommerce stores. I help businesses organize products, maintain accurate listings, manage inventory, process orders, and keep daily store operations running smoothly.",
+    'E-commerce Virtual Assistant with 4+ years of experience in Shopify & WooCommerce. Specializing in product listings, inventory management, and daily store operations.',
   summary:
     'Detail-oriented Virtual Assistant experienced in data management, lead generation, Shopify, WooCommerce and Home Depot product uploading. Skilled in structured workflows, quality checks, spreadsheets, and creative editing for remote e-commerce teams.',
   internet: 'Converge Fiber 200 Mbps + Smart 5G backup',

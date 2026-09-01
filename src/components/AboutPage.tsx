@@ -1,7 +1,21 @@
-import React from 'react';
-import { Mail, CheckCircle2, ShieldCheck, Cpu, Wifi, Globe, Clock, ArrowRight, Award, Zap, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Sparkles,
+  Award,
+  Cpu,
+  Zap,
+  Wifi,
+  Clock,
+  Globe,
+  MapPin,
+  Briefcase,
+  ArrowRight,
+  ChevronRight,
+  ExternalLink,
+  ShieldCheck,
+} from 'lucide-react';
 import { PERSONAL_INFO, EXPERIENCES, CORE_SKILLS } from '../data/portfolioData';
-import { RussellPortrait } from './RussellPortrait';
+import { AboutPortrait } from './AboutPortrait';
 
 interface AboutPageProps {
   onOpenHire: () => void;
@@ -9,193 +23,213 @@ interface AboutPageProps {
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenHire, onGoToWork }) => {
+  const [activeTab, setActiveTab] = useState<'overview' | 'experience' | 'setup'>('overview');
+
   return (
     <div
       id="about-page"
-      className="w-full max-w-[1400px] mx-auto px-6 sm:px-10 lg:px-16 py-8 sm:py-12 animate-fade-up font-inter text-[#2F5D3A]"
+      className="w-full max-w-[1700px] mx-auto px-4 sm:px-8 lg:px-12 py-2 sm:py-4 flex-1 flex flex-col justify-center animate-fade-up font-inter text-[#2F5D3A]"
       style={{
-        animationDuration: '0.6s',
+        animationDuration: '0.5s',
         animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
       }}
     >
-      {/* Hero Header */}
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-10 border-b-2 border-[#C9DAB0]/70">
-        <div className="space-y-3 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border-2 border-[#C9DAB0] shadow-xs text-xs font-bold text-[#2F5D3A]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#2F5D3A] animate-pulse" />
-            <span>Virtual Assistant & E-commerce Operations</span>
-          </div>
-          <h1 className="font-urbanist font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#2F5D3A] tracking-tight leading-tight">
-            Hi, I'm Russell Taga-an.
-          </h1>
-          <p className="text-base sm:text-lg text-[#2F5D3A]/85 font-medium leading-relaxed">
-            A detail-driven E-commerce Virtual Assistant with over 4 years of hands-on experience scaling online stores, managing complex product catalogs, and automating daily operations.
-          </p>
-        </div>
-
-        {/* Profile Card */}
-        <div className="flex-none p-5 rounded-2xl bg-white border-2 border-[#C9DAB0] shadow-md flex items-center gap-5 w-full sm:w-auto">
-          <div className="w-20 h-20 flex-none">
-            <RussellPortrait
+      {/* 2-Column Balanced Single-Screen Hero Viewport */}
+      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+        
+        {/* Left Column: 500px by 500px Random Curve Image (5 Cols on Large Screen) */}
+        <div className="lg:col-span-5 flex flex-col items-center justify-center">
+          <div className="w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] lg:w-[460px] lg:h-[460px] xl:w-[500px] xl:h-[500px] max-w-full flex items-center justify-center">
+            <AboutPortrait
               className="w-full h-full"
-              blobVariant="green"
-              showUploadControl={false}
+              showUploadControl={true}
             />
           </div>
-          <div className="space-y-1">
-            <h3 className="font-urbanist font-bold text-xl text-[#2F5D3A]">{PERSONAL_INFO.name}</h3>
-            <p className="text-xs text-[#3A6B4A] font-semibold">{PERSONAL_INFO.role}</p>
-            <div className="text-[11px] font-bold text-[#2F5D3A] bg-[#C9DAB0]/50 px-2.5 py-0.5 rounded-md inline-block">
-              {PERSONAL_INFO.location}
-            </div>
+          <div className="mt-3 px-4 py-1.5 rounded-full bg-white border-2 border-[#C9DAB0] shadow-xs flex items-center gap-2 text-xs font-bold text-[#2F5D3A]">
+            <span className="w-2 h-2 rounded-full bg-[#2F5D3A]" />
+            <span>Russell Taga-an • E-commerce Specialist</span>
           </div>
         </div>
-      </div>
 
-      {/* Grid: Story & Remote Readiness */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 py-10">
-        {/* Left 2 Cols: My Story & What I Bring */}
-        <div className="lg:col-span-2 space-y-8">
-          <section className="space-y-4">
-            <h2 className="font-urbanist font-bold text-2xl text-[#2F5D3A] flex items-center gap-2.5">
-              <Sparkles className="w-6 h-6 text-[#3A6B4A]" />
-              <span>Background & Experience</span>
-            </h2>
-            <div className="space-y-4 text-sm sm:text-base text-[#2F5D3A]/90 font-medium leading-relaxed bg-white p-6 sm:p-8 rounded-2xl border-2 border-[#C9DAB0] shadow-sm">
-              <p>
-                Throughout my 4+ years in e-commerce, I have partnered with brands and retail suppliers like <strong>Willow Bath and Vanity</strong> to manage thousands of products across <strong>Shopify, WooCommerce, and Home Depot</strong>.
-              </p>
-              <p>
-                My focus is operational excellence: ensuring every product listing has pixel-perfect imagery, high-converting SEO copy, accurate specifications, correct variant matrices, and seamless inventory sync.
-              </p>
-              <p>
-                Beyond standard catalog updates, I bring rich multimedia editing capabilities (Adobe Photoshop, Premiere Pro, DaVinci Resolve) to produce commercial-grade product assets and social media clips.
-              </p>
+        {/* Right Column: Bio, Navigation Tabs & Interactive Tabbed Panels (7 Cols on Large Screen) */}
+        <div className="lg:col-span-7 flex flex-col justify-center space-y-4">
+          
+          {/* Header Title & Status */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border-2 border-[#C9DAB0] shadow-xs text-xs font-bold text-[#2F5D3A] mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#2F5D3A] animate-pulse" />
+              <span>Available for Remote Roles</span>
             </div>
-          </section>
-
-          {/* Timeline of Experience */}
-          <section className="space-y-4">
-            <h2 className="font-urbanist font-bold text-2xl text-[#2F5D3A] flex items-center gap-2.5">
-              <Award className="w-6 h-6 text-[#3A6B4A]" />
-              <span>Career Milestones</span>
-            </h2>
-            <div className="space-y-4">
-              {EXPERIENCES.map((exp, idx) => (
-                <div
-                  key={idx}
-                  className={`p-6 rounded-2xl border-2 bg-white transition-all shadow-sm ${
-                    exp.featured ? 'border-[#2F5D3A]' : 'border-[#C9DAB0]'
-                  }`}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                    <h3 className="font-bold text-lg text-[#2F5D3A]">{exp.title}</h3>
-                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-[#C9DAB0] text-[#2F5D3A] self-start sm:self-auto">
-                      {exp.period}
-                    </span>
-                  </div>
-                  <div className="text-xs font-bold text-[#3A6B4A] mb-3">{exp.company}</div>
-                  <ul className="space-y-2">
-                    {exp.bullets.map((b, bIdx) => (
-                      <li key={bIdx} className="text-xs sm:text-sm text-[#2F5D3A]/90 font-medium flex items-start gap-2.5">
-                        <span className="w-2 h-2 rounded-full bg-[#2F5D3A] mt-1.5 flex-none" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
-
-        {/* Right 1 Col: Remote Tech Setup & Skills */}
-        <div className="space-y-6">
-          {/* Workstation & Remote Specs */}
-          <div className="p-6 rounded-2xl bg-white border-2 border-[#C9DAB0] shadow-sm space-y-4">
-            <h3 className="font-urbanist font-bold text-lg text-[#2F5D3A] flex items-center gap-2 border-b-2 border-[#C9DAB0]/60 pb-3">
-              <Cpu className="w-5 h-5 text-[#2F5D3A]" />
-              <span>Hardware & Workspace</span>
-            </h3>
-
-            <div className="space-y-3 text-xs sm:text-sm text-[#2F5D3A]">
-              <div className="p-3.5 rounded-xl bg-[#F2F2EE] border border-[#C9DAB0]">
-                <div className="font-bold text-[#3A6B4A] flex items-center gap-1.5 mb-1">
-                  <Wifi className="w-4 h-4" />
-                  <span>Internet Connection</span>
-                </div>
-                <p className="font-medium text-xs">{PERSONAL_INFO.internet}</p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-[#F2F2EE] border border-[#C9DAB0]">
-                <div className="font-bold text-[#3A6B4A] flex items-center gap-1.5 mb-1">
-                  <Cpu className="w-4 h-4" />
-                  <span>Dual Rig Setup</span>
-                </div>
-                <p className="font-medium text-xs">{PERSONAL_INFO.equipment}</p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-[#F2F2EE] border border-[#C9DAB0]">
-                <div className="font-bold text-[#3A6B4A] flex items-center gap-1.5 mb-1">
-                  <Clock className="w-4 h-4" />
-                  <span>Timezone Compatibility</span>
-                </div>
-                <p className="font-medium text-xs">{PERSONAL_INFO.availabilityDetails}</p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-[#F2F2EE] border border-[#C9DAB0]">
-                <div className="font-bold text-[#3A6B4A] flex items-center gap-1.5 mb-1">
-                  <Globe className="w-4 h-4" />
-                  <span>Languages</span>
-                </div>
-                <p className="font-medium text-xs">English (Fluent) • Filipino (Native)</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Core Tools */}
-          <div className="p-6 rounded-2xl bg-white border-2 border-[#C9DAB0] shadow-sm space-y-4">
-            <h3 className="font-urbanist font-bold text-lg text-[#2F5D3A] flex items-center gap-2 border-b-2 border-[#C9DAB0]/60 pb-3">
-              <Zap className="w-5 h-5 text-[#2F5D3A]" />
-              <span>Skills & Technologies</span>
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {CORE_SKILLS.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-3 py-1 rounded-lg text-xs font-bold bg-[#F2F2EE] border border-[#C9DAB0] text-[#2F5D3A] hover:bg-[#C9DAB0]/40 transition-colors"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Action Card */}
-          <div className="p-6 rounded-2xl bg-[#2F5D3A] text-[#F2F2EE] shadow-lg space-y-4">
-            <h4 className="font-urbanist font-bold text-xl text-[#F2F2EE]">Ready to work together?</h4>
-            <p className="text-xs text-[#D4E2B0] font-medium leading-relaxed">
-              Available immediately for full-time or part-time store management and daily virtual assistance.
+            <h1 className="font-urbanist font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#2F5D3A] tracking-tight leading-tight">
+              Hi, I'm Russell Taga-an.
+            </h1>
+            <p className="text-sm sm:text-base text-[#2F5D3A]/85 font-medium leading-snug mt-1">
+              E-commerce Virtual Assistant with over 4 years of experience scaling catalogs on Shopify, WooCommerce, and Home Depot.
             </p>
-            <div className="flex flex-col gap-2 pt-2">
-              <button
-                type="button"
-                onClick={onOpenHire}
-                className="w-full py-3 rounded-full bg-[#C9DAB0] hover:bg-[#D4E2B0] text-[#2F5D3A] font-bold text-sm transition-all shadow-sm text-center cursor-pointer"
-              >
-                Hire Me Now →
-              </button>
-              <button
-                type="button"
-                onClick={onGoToWork}
-                className="w-full py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-[#F2F2EE] font-semibold text-xs transition-all border border-white/20 text-center cursor-pointer"
-              >
-                Explore Selected Work ↗
-              </button>
+          </div>
+
+          {/* Quick Credibility Badges */}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-[#C9DAB0] text-xs font-bold text-[#2F5D3A] shadow-xs">
+              <Briefcase className="w-3.5 h-3.5 text-[#3A6B4A]" />
+              <span>4+ Years Operations</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-[#C9DAB0] text-xs font-bold text-[#2F5D3A] shadow-xs">
+              <MapPin className="w-3.5 h-3.5 text-[#3A6B4A]" />
+              <span>{PERSONAL_INFO.location}</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-[#C9DAB0] text-xs font-bold text-[#2F5D3A] shadow-xs">
+              <Wifi className="w-3.5 h-3.5 text-[#3A6B4A]" />
+              <span>200 Mbps Fiber + 5G Backup</span>
             </div>
           </div>
+
+          {/* Segmented Controls (No-Scroll Tab Switcher) */}
+          <div className="p-1 rounded-2xl bg-[#E8EDE0] border border-[#C9DAB0] flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setActiveTab('overview')}
+              className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                activeTab === 'overview'
+                  ? 'bg-white text-[#2F5D3A] shadow-xs border border-[#C9DAB0]'
+                  : 'text-[#2F5D3A]/70 hover:text-[#2F5D3A] hover:bg-white/50'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Background & Skills</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('experience')}
+              className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                activeTab === 'experience'
+                  ? 'bg-white text-[#2F5D3A] shadow-xs border border-[#C9DAB0]'
+                  : 'text-[#2F5D3A]/70 hover:text-[#2F5D3A] hover:bg-white/50'
+              }`}
+            >
+              <Award className="w-3.5 h-3.5" />
+              <span>Experience</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('setup')}
+              className={`flex-1 py-2 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                activeTab === 'setup'
+                  ? 'bg-white text-[#2F5D3A] shadow-xs border border-[#C9DAB0]'
+                  : 'text-[#2F5D3A]/70 hover:text-[#2F5D3A] hover:bg-white/50'
+              }`}
+            >
+              <Cpu className="w-3.5 h-3.5" />
+              <span>Workstation & Ready</span>
+            </button>
+          </div>
+
+          {/* Tab Content Box - Fixed Height to Prevent Any Layout Shift/Scroll */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-white border-2 border-[#C9DAB0] shadow-sm min-h-[220px] max-h-[260px] overflow-y-auto">
+            {activeTab === 'overview' && (
+              <div className="space-y-3 animate-fade-in">
+                <p className="text-xs sm:text-sm text-[#2F5D3A]/90 font-medium leading-relaxed">
+                  I partner with e-commerce brands like <strong>Willow Bath and Vanity</strong> to manage thousands of SKU listings with pixel-perfect images, accurate metafields, SEO copy, and reliable inventory synchronization.
+                </p>
+                <div className="pt-2 border-t border-[#C9DAB0]/60">
+                  <div className="text-xs font-bold text-[#3A6B4A] mb-2 flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-[#2F5D3A]" />
+                    <span>Core Tools & Technologies:</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {CORE_SKILLS.slice(0, 10).map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-[#F2F2EE] border border-[#C9DAB0] text-[#2F5D3A]"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'experience' && (
+              <div className="space-y-3 animate-fade-in">
+                {EXPERIENCES.slice(0, 2).map((exp, idx) => (
+                  <div key={idx} className="pb-2.5 last:pb-0 border-b last:border-b-0 border-[#C9DAB0]/60">
+                    <div className="flex items-center justify-between gap-2">
+                      <h4 className="font-bold text-xs sm:text-sm text-[#2F5D3A]">{exp.title}</h4>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#C9DAB0] text-[#2F5D3A]">
+                        {exp.period}
+                      </span>
+                    </div>
+                    <div className="text-[11px] font-semibold text-[#3A6B4A]">{exp.company}</div>
+                    <p className="text-xs text-[#2F5D3A]/85 mt-1 line-clamp-2">
+                      {exp.bullets[0]}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeTab === 'setup' && (
+              <div className="grid grid-cols-2 gap-2.5 animate-fade-in text-xs">
+                <div className="p-2.5 rounded-xl bg-[#F2F2EE] border border-[#C9DAB0]">
+                  <div className="font-bold text-[#3A6B4A] flex items-center gap-1 mb-0.5">
+                    <Wifi className="w-3.5 h-3.5" />
+                    <span>Internet</span>
+                  </div>
+                  <p className="font-medium text-[11px] text-[#2F5D3A]">{PERSONAL_INFO.internet}</p>
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-[#F2F2EE] border border-[#C9DAB0]">
+                  <div className="font-bold text-[#3A6B4A] flex items-center gap-1 mb-0.5">
+                    <Cpu className="w-3.5 h-3.5" />
+                    <span>Hardware</span>
+                  </div>
+                  <p className="font-medium text-[11px] text-[#2F5D3A]">MacBook Air M1 + PC dual monitor</p>
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-[#F2F2EE] border border-[#C9DAB0]">
+                  <div className="font-bold text-[#3A6B4A] flex items-center gap-1 mb-0.5">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Hours</span>
+                  </div>
+                  <p className="font-medium text-[11px] text-[#2F5D3A]">EST, PST, GMT & AEST ready</p>
+                </div>
+
+                <div className="p-2.5 rounded-xl bg-[#F2F2EE] border border-[#C9DAB0]">
+                  <div className="font-bold text-[#3A6B4A] flex items-center gap-1 mb-0.5">
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>Languages</span>
+                  </div>
+                  <p className="font-medium text-[11px] text-[#2F5D3A]">English (Fluent) • Filipino (Native)</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <button
+              type="button"
+              onClick={onOpenHire}
+              className="px-6 py-2.5 rounded-full bg-[#2F5D3A] hover:bg-[#3A6B4A] text-white font-bold text-xs sm:text-sm transition-all shadow-md cursor-pointer flex items-center gap-2"
+            >
+              <span>Get in Touch</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={onGoToWork}
+              className="px-5 py-2.5 rounded-full bg-white hover:bg-[#F2F2EE] border-2 border-[#C9DAB0] text-[#2F5D3A] font-bold text-xs sm:text-sm transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+            >
+              <span>View Managed Stores</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
         </div>
+
       </div>
     </div>
   );
 };
+

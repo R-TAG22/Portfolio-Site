@@ -14,7 +14,7 @@ export default function App() {
   return (
     <div
       id="app-root"
-      className="app relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden text-[#2F5D3A] font-inter selection:bg-[#C9DAB0] selection:text-[#2F5D3A]"
+      className="app relative min-h-screen lg:h-screen lg:max-h-screen w-full flex flex-col justify-between overflow-x-hidden lg:overflow-hidden text-[#2F5D3A] font-inter selection:bg-[#C9DAB0] selection:text-[#2F5D3A]"
       style={{
         background: `
           radial-gradient(ellipse at 85% 45%, rgba(201, 218, 176, 0.4) 0%, rgba(212, 226, 176, 0.15) 40%, transparent 70%),
@@ -36,17 +36,17 @@ export default function App() {
       />
 
       {/* Main Page View Switching */}
-      <main id="main-content-view" className="flex-1 w-full flex flex-col justify-center">
+      <main id="main-content-view" className="flex-1 w-full flex flex-col justify-center min-h-0">
         {activeTab === 'home' && (
           <section
             id="main-hero"
-            className="w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-16 flex-1 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 py-4 lg:py-6 relative z-10 animate-fade-in"
+            className="w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-16 flex-1 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10 py-1 sm:py-2 relative z-10 animate-fade-in"
           >
             <HeroLeft onOpenHire={() => setIsHireOpen(true)} />
 
             <div
               id="hero-right-wrapper"
-              className="flex-1 flex items-center justify-center w-full min-h-[480px] sm:min-h-[580px] lg:min-h-[720px] overflow-visible"
+              className="flex-1 flex items-center justify-center w-full min-h-[360px] sm:min-h-[440px] lg:min-h-[500px] xl:min-h-[560px] overflow-visible"
             >
               <CirclesVisualization />
             </div>

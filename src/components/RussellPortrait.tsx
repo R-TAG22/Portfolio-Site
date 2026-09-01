@@ -1,46 +1,85 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Upload, Camera } from 'lucide-react';
+import { Camera } from 'lucide-react';
+import defaultRussellPhoto from '../assets/images/regenerated_image_1788105616348.png';
 
 interface RussellPortraitProps {
   className?: string;
-  blobVariant?: 'green' | 'blue' | 'sage';
+  blobVariant?: 'green' | 'blue' | 'sage' | 'white';
   showUploadControl?: boolean;
 }
 
 export const RussellPortrait: React.FC<RussellPortraitProps> = ({
   className = 'w-full h-full',
-  blobVariant = 'green',
+  blobVariant = 'white',
   showUploadControl = true,
 }) => {
   const [customPhoto, setCustomPhoto] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('russell_custom_photo');
-    if (saved) {
-      setCustomPhoto(saved);
+    try {
+      const saved = localStorage.getItem('russell_custom_photo');
+      if (saved) {
+        setCustomPhoto(saved);
+      }
+    } catch {
+      // Ignore localStorage read errors in restricted contexts
     }
   }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        setCustomPhoto(result);
-        localStorage.setItem('russell_custom_photo', result);
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        // Compress and downscale on off-screen canvas to guarantee small size (<150KB)
+        const canvas = document.createElement('canvas');
+        const MAX_SIZE = 700;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_SIZE) {
+            height = Math.round((height * MAX_SIZE) / width);
+            width = MAX_SIZE;
+          }
+        } else {
+          if (height > MAX_SIZE) {
+            width = Math.round((width * MAX_SIZE) / height);
+            height = MAX_SIZE;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.fillStyle = '#FFFFFF';
+          ctx.fillRect(0, 0, width, height);
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+
+          setCustomPhoto(compressedDataUrl);
+
+          try {
+            localStorage.setItem('russell_custom_photo', compressedDataUrl);
+          } catch (storageErr) {
+            console.warn('Storage quota exceeded, keeping photo in session memory:', storageErr);
+          }
+        } else {
+          const rawResult = event.target?.result as string;
+          setCustomPhoto(rawResult);
+        }
       };
-      reader.readAsDataURL(file);
-    }
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   };
 
-  const blobBgColor =
-    blobVariant === 'blue'
-      ? '#2563EB'
-      : blobVariant === 'sage'
-      ? '#4A7C59'
-      : '#2F5D3A';
+  const activePhoto = customPhoto || defaultRussellPhoto;
 
   return (
     <div className={`relative flex items-center justify-center ${className}`}>
@@ -53,32 +92,27 @@ export const RussellPortrait: React.FC<RussellPortraitProps> = ({
         className="hidden"
       />
 
-      {/* Main Container with White Background Card Frame (like 3rd pic) */}
-      <div className="relative w-full h-full flex items-center justify-center p-2 rounded-[36px] bg-white shadow-xl border-2 border-[#E2EBD5]">
-        
-        {/* Organic Curved Blob Background Shape (like 3rd pic) */}
-        <div
-          className="relative w-full h-full organic-blob-shape flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-102"
-          style={{ backgroundColor: blobBgColor }}
-        >
-          {/* Subtle light gradient inside blob */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/15 pointer-events-none" />
-
-          {customPhoto ? (
-            /* Uploaded user photo */
-            <img
-              src={customPhoto}
-              alt="Russell Taga-an"
-              className="w-full h-full object-cover object-top select-none transition-transform duration-500 hover:scale-105"
-            />
-          ) : (
-            /* High-fidelity Vector Representation of Russell from Pic of Me 1.jpeg */
-            <svg
-              viewBox="0 0 400 480"
-              className="w-full h-full select-none"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+      {/* Organic Curved Blob Container with pure white background */}
+      <div
+        className="relative w-full h-full organic-blob-shape flex items-center justify-center overflow-hidden transition-transform duration-500 group-hover:scale-105 shadow-2xl border-4 border-white bg-white"
+        style={{ backgroundColor: '#FFFFFF' }}
+      >
+        {activePhoto ? (
+          /* Russell photo with white background */
+          <img
+            src={activePhoto}
+            alt="Russell Taga-an"
+            className="w-[500px] h-[500px] max-w-none object-cover object-top select-none transition-transform duration-500 scale-105 hover:scale-110 bg-[#ffffff]"
+            style={{ backgroundColor: '#ffffff' }}
+          />
+        ) : (
+          /* High-fidelity Vector Representation of Russell - 500px x 500px */
+          <svg
+            viewBox="70 65 260 330"
+            className="w-[500px] h-[500px] max-w-none select-none transform scale-110 transition-transform duration-500 hover:scale-120 origin-center bg-white"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
               <defs>
                 {/* Skin Tones */}
                 <linearGradient id="skinBase" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -310,7 +344,6 @@ export const RussellPortrait: React.FC<RussellPortraitProps> = ({
             </button>
           )}
         </div>
-      </div>
     </div>
   );
 };

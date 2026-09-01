@@ -19,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       id="main-header"
-      className="w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-16 py-6 flex items-center justify-between relative z-30 font-inter"
+      className="w-full max-w-[1920px] mx-auto px-6 sm:px-10 lg:px-16 py-3 sm:py-4 flex items-center justify-between relative z-30 font-inter"
     >
       {/* Left: Russell logo with profile pic + brand title */}
       <div id="header-left" className="flex items-center">

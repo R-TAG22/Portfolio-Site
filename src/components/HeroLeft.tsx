@@ -6,8 +6,8 @@ interface HeroLeftProps {
   onOpenHire: () => void;
 }
 
-const FULL_TEXT = 'Scale Your E-Commerce Store With A Proven Operations Specialist.';
-const HIGHLIGHT_START_INDEX = 28; // "Scale Your E-Commerce Store " | "With A Proven Operations Specialist."
+const FULL_TEXT = 'Scale Your E-Commerce Store.';
+const HIGHLIGHT_START_INDEX = 11; // "Scale Your " | "E-Commerce Store."
 
 export const HeroLeft: React.FC<HeroLeftProps> = ({ onOpenHire }) => {
   const [typedLength, setTypedLength] = useState<number>(0);
@@ -47,16 +47,16 @@ export const HeroLeft: React.FC<HeroLeftProps> = ({ onOpenHire }) => {
       {/* Remote Availability Status Badge */}
       <div
         id="hero-availability-badge"
-        className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#C9DAB0] shadow-xs text-[12px] font-bold text-[#2F5D3A] mb-4 select-none"
+        className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border-2 border-[#C9DAB0] shadow-xs text-[11px] sm:text-[12px] font-bold text-[#2F5D3A] mb-2 sm:mb-3 select-none"
       >
-        <span className="w-2.5 h-2.5 rounded-full bg-[#2F5D3A] animate-pulse" />
+        <span className="w-2 h-2 rounded-full bg-[#2F5D3A] animate-pulse" />
         <span>Available for Remote Work</span>
       </div>
 
       {/* Client Magnet Typewriter Heading */}
       <h1
         id="hero-main-heading"
-        className="font-urbanist font-extrabold text-[34px] sm:text-[44px] md:text-[50px] lg:text-[56px] leading-[1.08] lg:leading-[58px] tracking-[-1.5px] min-h-[115px] sm:min-h-[135px] lg:min-h-[175px]"
+        className="font-urbanist font-extrabold text-[32px] sm:text-[42px] md:text-[48px] lg:text-[52px] xl:text-[56px] leading-[1.08] tracking-[-1.5px] min-h-[70px] sm:min-h-[90px] lg:min-h-[105px]"
       >
         <span className="text-[#2F5D3A]">{typedMainText}</span>
         <span className="text-[#3A6B4A]">{typedHighlightText}</span>
@@ -73,7 +73,7 @@ export const HeroLeft: React.FC<HeroLeftProps> = ({ onOpenHire }) => {
       {/* Intro Description */}
       <p
         id="hero-intro-text"
-        className="mt-3 text-sm sm:text-base text-[#2F5D3A]/90 font-medium leading-relaxed max-w-xl"
+        className="mt-2 sm:mt-3 text-xs sm:text-sm md:text-base text-[#2F5D3A]/90 font-medium leading-relaxed max-w-xl"
       >
         {PERSONAL_INFO.intro}
       </p>
@@ -81,11 +81,11 @@ export const HeroLeft: React.FC<HeroLeftProps> = ({ onOpenHire }) => {
       {/* Action CTA Button: Hire Me */}
       <div
         id="start-project-container"
-        className="mt-6 sm:mt-8 flex items-center gap-4 opacity-0 animate-fade-up"
+        className="mt-4 sm:mt-5 flex items-center gap-4 animate-fade-up"
         style={{
-          animationDelay: '2.0s',
+          animationDelay: '0.2s',
           animationFillMode: 'forwards',
-          animationDuration: '0.8s',
+          animationDuration: '0.6s',
           animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
@@ -94,13 +94,13 @@ export const HeroLeft: React.FC<HeroLeftProps> = ({ onOpenHire }) => {
             id="start-project-btn"
             type="button"
             onClick={onOpenHire}
-            className="btn-start cursor-pointer group px-8 py-3.5"
+            className="btn-start cursor-pointer group px-7 py-3 select-none"
           >
-            <span className="relative z-10 font-bold text-base flex items-center gap-2">
+            <span className="relative z-10 font-bold text-sm sm:text-base flex items-center gap-2 text-white">
               <Mail className="w-4 h-4 text-[#C9DAB0]" />
               <span>Hire Me</span>
             </span>
-            <ChevronRight className="w-5 h-5 relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+            <ChevronRight className="w-5 h-5 text-white relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </div>
       </div>
@@ -108,11 +108,11 @@ export const HeroLeft: React.FC<HeroLeftProps> = ({ onOpenHire }) => {
       {/* Bottom Live Metrics */}
       <div
         id="hero-metrics-grid"
-        className="mt-8 sm:mt-10 pt-4 border-t-2 border-[#C9DAB0]/70 grid grid-cols-3 gap-3 sm:gap-6 w-full max-w-lg opacity-0 animate-fade-up"
+        className="mt-5 sm:mt-7 pt-3 border-t-2 border-[#C9DAB0]/70 grid grid-cols-3 gap-3 sm:gap-6 w-full max-w-lg animate-fade-up"
         style={{
-          animationDelay: '2.4s',
+          animationDelay: '0.4s',
           animationFillMode: 'forwards',
-          animationDuration: '0.8s',
+          animationDuration: '0.6s',
           animationTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >

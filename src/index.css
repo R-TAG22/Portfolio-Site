@@ -51,6 +51,28 @@
   animation: morph-blob 14s ease-in-out infinite alternate-reverse;
 }
 
+@keyframes morph-blob-about {
+  0%, 100% {
+    border-radius: 46% 54% 68% 32% / 38% 65% 35% 62%;
+  }
+  33% {
+    border-radius: 65% 35% 38% 62% / 58% 42% 58% 42%;
+  }
+  66% {
+    border-radius: 35% 65% 58% 42% / 44% 56% 40% 60%;
+  }
+}
+
+.organic-blob-shape-about {
+  border-radius: 46% 54% 68% 32% / 38% 65% 35% 62%;
+  animation: morph-blob-about 12s ease-in-out infinite alternate;
+}
+
+.organic-blob-shape-about-glow {
+  border-radius: 54% 46% 32% 68% / 62% 38% 62% 38%;
+  animation: morph-blob-about 16s ease-in-out infinite alternate-reverse;
+}
+
 @keyframes spin-cw {
   from {
     transform: translate(-50%, -50%) rotate(0deg);
@@ -187,7 +209,7 @@
 .animate-ticker {
   display: flex;
   width: max-content;
-  animation: ticker-scroll 20s linear infinite;
+  animation: ticker-scroll 36s linear infinite;
 }
 
 .animate-ticker:hover {
